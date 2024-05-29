@@ -1,17 +1,21 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 const app = express();
+const mongoose = require("mongoose");
+const User = require("../models/User.js"); // Import the User model
 const port = 8080;
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
+const MONGO_URL = "mongodb://127.0.0.1:27017/cryptx";
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+async function main() {
+  await mongoose.connect(MONGO_URL);
+}
+const connectDB = require("./config/db");
+// Connect to database
+connectDB();
 
-// Basic route to render an EJS view
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Home', message: 'Welcome to my website!' });
+app.get("/", (req, res) => {
+  res.send("hello ji ! mein root bol raha hu.");
 });
 
 app.listen(port, () => {
