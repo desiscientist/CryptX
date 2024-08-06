@@ -1,23 +1,17 @@
 const mongoose = require("mongoose");
+require("dotenv").config(); // Load environment variables from .env file
 
 const connectDB = async () => {
   try {
-    // MongoDB connection string
-    const mongoURI = process.env.MONGO_URI;
-
-    // Connect to MongoDB
-    await mongoose.connect(mongoURI, {
+    const dbURI = process.env.DB_URI || "mongodb://127.0.0.1:27017/cryptx";
+    await mongoose.connect(dbURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
     });
-
-    console.log("MongoDB connected");
+    console.log("Database connected successfully");
   } catch (err) {
-    console.error(err.message);
-    // Exit process with failure
-    process.exit(1);
+    console.error("Database connection error:", err);
+    process.exit(1); // Exit process with failure code
   }
 };
 

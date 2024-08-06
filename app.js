@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
-const User = require("../models/User.js"); // Import the User model
+const User = require("./models/User.js"); // Import the User model
 const port = 8080;
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/cryptx";
