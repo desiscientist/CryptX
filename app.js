@@ -1,23 +1,18 @@
+require("dotenv").config();
 const express = require("express");
-const path = require("path");
+const authRoutes = require("./routes/authRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
+const userRoutes = require("./routes/userRoutes");
+const errorHandler = require("./middleware/errorHandler");
+
 const app = express();
-const mongoose = require("mongoose");
-const User = require("./models/User.js"); // Import the User model
-const port = 8080;
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/cryptx";
+app.use(express.json());
 
-async function main() {
-  await mongoose.connect(MONGO_URL);
-}
-const connectDB = require("./config/db");
-// Connect to database
-connectDB();
+app.use("/api/auth", authRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/user", userRoutes);
 
-app.get("/", (req, res) => {
-  res.send("hello ji ! mein root bol raha hu.");
-});
+app.use(errorHandler); // Use custom error handler
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
-});
+module.exports = app;
